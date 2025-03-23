@@ -1,47 +1,62 @@
 public class FibonacciChallenge {
-    
+
     public static void main(String[] args) {
-        // Fix me: Should we allow negative numbers as input?
-        System.out.println("Fibonacci(5) = " + fibonacci(5));
-        System.out.println("Fibonacci(10) = " + fibonacci(10));
-        
-        // Fix me: What happens with this test case?
-        System.out.println("First 8 Fibonacci numbers:");
-        printFibonacciSequence(8);
-        
-        System.out.println("\nUsing efficient algorithm:");
-        System.out.println("Fibonacci(40) = " + efficientFibonacci(40));
+        // Ensure negative numbers are not processed for Fibonacci sequence
+        try {
+            System.out.println("Fibonacci(5) = " + fibonacci(5));
+            System.out.println("Fibonacci(10) = " + fibonacci(10));
+
+            System.out.println("First 8 Fibonacci numbers:");
+            printFibonacciSequence(8);
+
+            System.out.println("\nUsing efficient algorithm:");
+            System.out.println("Fibonacci(40) = " + efficientFibonacci(40));
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
     }
-    
+
     public static int fibonacci(int n) {
-        // Fix me: Remember, Fibonacci sequence starts with 0, 1, ...
-        
-        return fibonacci(n - 1) + fibonacci(n - 2);
+        // Base cases for Fibonacci sequence
+        if (n < 0) {
+            throw new IllegalArgumentException("Fibonacci number cannot be negative.");
+        }
+        if (n == 0) {
+            return 0;
+        }
+        if (n == 1) {
+            return 1;
+        }
+
+        return fibonacci(n - 1) + fibonacci(n - 2); // Recursion for Fibonacci
     }
-    
+
     public static void printFibonacciSequence(int n) {
-        // Fix me: Off-by-one error?
-        for (int i = 1; i <= n; i++) {
+        // Loop from 0 to n-1 for the correct sequence
+        for (int i = 0; i < n; i++) {
             System.out.print(fibonacci(i) + " ");
         }
         System.out.println();
     }
-    
+
     public static int efficientFibonacci(int n) {
-        // Fix me: How can you avoid recalculating the same Fibonacci numbers repeatedly?
-        int a = 0;
-        int b = 1;
-        
-        if (n == 0) {
-            return a;
+        // Iterative method to avoid recalculating the same values
+        if (n < 0) {
+            throw new IllegalArgumentException("Fibonacci number cannot be negative.");
         }
-        
-        for (int i = 2; i < n; i++) {
+        if (n == 0) {
+            return 0;
+        }
+        if (n == 1) {
+            return 1;
+        }
+
+        int a = 0, b = 1;
+        for (int i = 2; i <= n; i++) {
             int temp = a;
             a = b;
             b = temp + a;
         }
-        
         return b;
     }
 }
